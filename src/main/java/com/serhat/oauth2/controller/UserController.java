@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,14 +19,16 @@ import java.security.Principal;
 public class UserController {
 
     @GetMapping("/oauth2Test")
-    public String oauth2(){
+    public String oauth2() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.getPrincipal() instanceof OAuth2User oAuth2User){
-            String username = oAuth2User.getAttribute("username");
-            return  username+" You see this message if you logged in with google";
+        if (authentication.getPrincipal() instanceof UserDetails userDetails){
+            String username = userDetails.getUsername();
+            return  username+" You see this message if you have logged in with Google";
+
         }
-        return "username not found";
+        return "User  not authenticated";
     }
+
 
     @GetMapping("/form")
     public String form(){
