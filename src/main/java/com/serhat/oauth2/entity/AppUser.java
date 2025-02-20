@@ -34,6 +34,13 @@ public class AppUser implements UserDetails {
 
     private String provider;
 
+    private Integer favoriteNumber;
+
+    @PrePersist
+    void initFavNum(){
+        this.favoriteNumber = 12;
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {

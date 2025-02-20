@@ -21,23 +21,26 @@ public class UserController {
     @GetMapping("/oauth2Test")
     public String oauth2() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails userDetails){
-            String username = userDetails.getUsername();
-            return  username+" You see this message if you have logged in with Google";
-
-        }
-        return "User  not authenticated";
+        String username = authentication.getName();
+        return  username+" You see this message if you have logged in with Google";
     }
 
+    @GetMapping("/secure-message")
+    public String secureMessage() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            return authentication.getName()+" This is a secure message. You are authenticated!";
+        } else {
+            return "Unauthorized access. Please login!";
+        }
+    }
 
     @GetMapping("/form")
     public String form(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails userDetails){
-            String username = userDetails.getUsername();
-            return  username+" You see this message if you logged in with credentials";
+        String username = authentication.getName();
+        return  username+" You see this message if you logged in with credentials";
 
-        }
-        return "Username not found";
     }
 }
