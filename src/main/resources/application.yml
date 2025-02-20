@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 883073327868-hat599icg8uigbk22gdhbmlq0abfgatt.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile,email
+            client-name: Google
+            redirect-uri: "http://localhost:8080/login/oauth2/code/google"
+            authorization-grant-type: authorization_code
+  datasource:
+    url: jdbc:postgresql://localhost:5432/oauth2
+    username: postgres
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+  application:
+    name: oauth2
